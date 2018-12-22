@@ -3,7 +3,7 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 function bes.config ()
 {
-    bes.echo.title "Reading Configuration Project" $APP_NAME
+    echo.title "Reading Configuration Project" $APP_NAME
     if [ -f ./bes.ini ]; then 
         bes.ini ./bes.ini -p bes -b 1
 
@@ -14,24 +14,24 @@ function bes.config ()
             value="bes_project_$key"
             if [ ! -z "${!value}" ]; then
                 hasconf=1
-                bes.echo.keyval $key "${!value}"
+                echo.keyval $key "${!value}"
             fi
         done
         if [ "$hasconf" = "0" ]; then
-            bes.echo "    -"
+            echo.msg "    -"
         fi
 
-        bes.echo.title "Dependencies"
+        echo.title "Dependencies"
         bes.ini ./bes.ini require -p bes -b 1
         local prefix="bes_require"
         local    key=""
         for name in ${bes_ALL_VARS}; do
                   key=${name:${#prefix}+1}
             local tmp=${key//_/.}
-            bes.echo.keyval "$tmp" "${!name}"
+            echo.keyval "$tmp" "${!name}"
         done
     else
-        bes.echo "     $project does not have bes.ini file"
+        echo "     $project does not have bes.ini file"
     fi
     echo
 }
